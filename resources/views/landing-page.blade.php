@@ -124,7 +124,12 @@
                 <div class="grid grid-cols-1 sm:grid-cols-3 gap-10">
 
                     {{-- Card A --}}
-                    <div class="bg-white rounded-md p-6 shadow-md hover:shadow-lg transition hover:scale-105 relative">
+                    <div
+                        class="bg-white rounded-md p-6 shadow-md hover:shadow-lg
+    transform transition-all duration-500 ease-out
+    hover:scale-105 hover:-translate-y-2 relative">
+
+
 
                         <!-- Badge Keluar dari Card -->
                         <div class="absolute -top-6 -left-6">
@@ -157,7 +162,10 @@
                         </div>
                     </div>
                     {{-- Card B --}}
-                    <div class="bg-white rounded-md p-6 shadow-md hover:shadow-lg transition hover:scale-105 relative">
+                    <div
+                        class="bg-white rounded-md p-6 shadow-md hover:shadow-lg 
+    transition-all duration-300 ease-out 
+    hover:scale-105 hover:-translate-y-1 relative">
 
                         <!-- Badge Keluar dari Card -->
                         <div class="absolute -top-6 -left-6">
@@ -185,7 +193,10 @@
                         </div>
                     </div>
                     {{-- Card C --}}
-                    <div class="bg-white rounded-md p-6 shadow-md hover:shadow-lg transition hover:scale-105 relative">
+                    <div
+                        class="bg-white rounded-md p-6 shadow-md hover:shadow-lg 
+    transition-all duration-300 ease-out 
+    hover:scale-105 hover:-translate-y-1 relative">
 
                         <!-- Badge Keluar dari Card -->
                         <div class="absolute -top-6 -left-6">
@@ -216,7 +227,6 @@
                         </div>
                     </div>
                 </div>
-
             </div>
         </main>
         <main class="relative z-10 mt-5">
@@ -232,10 +242,15 @@
                 <!-- BUTTON -->
                 <div class="flex justify-center mt-4">
                     <a href="/donate"
-                        class="bg-[#90C5BA] text-green font-semibold px-8 py-3 rounded-2xl shadow 
-                       flex items-center gap-3 hover:bg-[#7EB5AA] transition">
-                        Mulai Berdonasi Sekarang
-                        <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24">
+                        class="group relative bg-[#90C5BA] text-green font-semibold px-8 py-3 rounded-2xl shadow-md 
+               flex items-center gap-3 
+               transition-all duration-300 ease-out
+               hover:bg-[#7EB5AA] hover:scale-105 hover:-translate-y-1 hover:shadow-xl">
+
+                        <span>Mulai Berdonasi Sekarang</span>
+
+                        <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24"
+                            class="transition-transform duration-300 group-hover:translate-x-1">
                             <g fill="none">
                                 <path
                                     d="M24 0v24H0V0zM12.593 23.258l-.011.002l-.071.035l-.02.004l-.014-.004l-.071-.035q-.016-.005-.024.005l-.004.01l-.017.428l.005.02l.01.013l.104.074l.015.004l.012-.004l.104-.074l.012-.016l.004-.017l-.017-.427q-.004-.016-.017-.018m.265-.113l-.013.002l-.185.093l-.01.01l-.003.011l.018.43l.005.012l.008.007l.201.093q.019.005.029-.008l.004-.014l-.034-.614q-.005-.019-.02-.022m-.715.002a.02.02 0 0 0-.027.006l-.006.014l-.034.614q.001.018.017.024l.015-.002l.201-.093l.01-.008l.004-.011l.017-.43l-.003-.012l-.01-.01z" />
@@ -247,9 +262,5 @@
                 </div>
             </div>
         </main>
-
-
-        {{-- Footer ges --}}
-
     </main>
 </x-layout>
