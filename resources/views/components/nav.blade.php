@@ -1,4 +1,5 @@
 <header class="fixed inset-x-0 top-4 z-50 flex justify-center px-4">
+    {{-- <header class="fixed inset-x-0 top-4 z-50 flex justify-center px-4 bg-[#FBF8F5]"> --}}
     <nav
         class="backdrop-blur-md bg-green border border-white/30 shadow-lg
                px-4 py-2 md:px-4 md:py-1 rounded-2xl flex items-center gap-3 md:gap-10 relative">

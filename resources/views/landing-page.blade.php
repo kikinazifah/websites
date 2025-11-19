@@ -190,8 +190,7 @@
                         <!-- Badge Keluar dari Card -->
                         <div class="absolute -top-6 -left-6">
                             <div
-                                class="bg-card text-white rounded-full w-13 h-13
-                    flex items-center justify-center text-2xl font-bold shadow-md">
+                                class="bg-card text-white rounded-full w-13 h-13 flex items-center justify-center text-2xl font-bold shadow-md">
                                 3
                             </div>
                         </div>
@@ -216,89 +215,41 @@
                                 koordinasikan penjemputan</div>
                         </div>
                     </div>
-
                 </div>
 
             </div>
         </main>
+        <main class="relative z-10 mt-5">
+            <div class="max-w-5xl mx-auto px-6 py-10">
+                <h2 class="text-center font-extrabold text-3xl md:text-4xl text-green drop-shadow-sm mb-5">
+                    Barang Kecil Anda, Dampak Besar Bagi Mereka
+                </h2>
 
-        {{-- Footer ges --}}
-        <footer class="bg-white mt-10">
-            <div class="max-w-6xl mx-auto px-6 py-10 md:py-12">
-                <div class="grid gap-10 md:grid-cols-4">
-                    {{-- Brand + Deskripsi --}}
-                    <div>
-                        <div class="flex items-center gap-2 mb-4">
-                            <div class="w-9 h-9 rounded-full flex items-center justify-center overflow-hidden">
-                                <img src="{{ asset('images/logo.png') }}" alt="logo"
-                                    class="w-13 h-13 object-contain">
-                            </div>
+                <p class="text-text text-center text-xl mb-6">
+                    Mulai perjalanan berbagi Anda hari ini dan jadilah bagian dari komunitas peduli
+                </p>
 
-                            <span class="text-xl font-semibold text-[#195b3b]">
-                                Green Drop
-                            </span>
-                        </div>
-
-                        <p class="text-sm text-gray-600 leading-relaxed max-w-xs">
-                            Menghubungkan barang layak pakai dengan mereka yang membutuhkan.
-                        </p>
-                    </div>
-
-                    {{-- Navigasi --}}
-                    <div>
-                        <h3 class="text-sm font-semibold text-gray-800 mb-3">Navigasi</h3>
-                        <ul class="space-y-2 text-sm text-gray-600">
-                            <li>
-                                <a href="#" class="hover:text-green hover:underline">
-                                    Beranda
-                                </a>
-                            </li>
-                            <li>
-                                <a href="#" class="hover:text-green hover:underline">
-                                    Peta Donasi
-                                </a>
-                            </li>
-                            <li>
-                                <a href="#" class="hover:text-green hover:underline">
-                                    Kirim Donasi
-                                </a>
-                            </li>
-                            <li>
-                                <a href="#" class="hover:text-green hover:underline">
-                                    Tentang
-                                </a>
-                            </li>
-                        </ul>
-                    </div>
-
-                    {{-- Kontak --}}
-                    <div>
-                        <h3 class="text-sm font-semibold text-gray-800 mb-3">Kontak</h3>
-                        <div class="flex items-center gap-2 text-sm text-gray-700">
-                            <svg xmlns="http://www.w3.org/2000/svg" width="18" height="18"
-                                viewBox="0 0 24 24">
-                                <path fill="none" stroke="#2d6a4f" stroke-width="1.5" stroke-linecap="round"
-                                    stroke-linejoin="round"
-                                    d="M4 6.75A2.75 2.75 0 0 1 6.75 4h10.5A2.75 2.75 0 0 1 20 6.75v10.5A2.75 2.75 0 0 1 17.25 20H6.75A2.75 2.75 0 0 1 4 17.25z" />
-                                <path fill="none" stroke="#2d6a4f" stroke-width="1.5" stroke-linecap="round"
-                                    stroke-linejoin="round"
-                                    d="m5.5 7.5l5.636 3.523a2.75 2.75 0 0 0 2.728 0L19.5 7.5" />
-                            </svg>
-                            <span>greendrop@gmail.com</span>
-                        </div>
-                    </div>
-
-                    {{-- Tentang Kami --}}
-                    <div>
-                        <h3 class="text-sm font-semibold text-gray-800 mb-3">Tentang Kami</h3>
-                        <p class="text-sm text-gray-600 leading-relaxed">
-                            Platform berbasis peta untuk memudahkan distribusi barang donasi ke tangan yang tepat.
-                        </p>
-                    </div>
+                <!-- BUTTON -->
+                <div class="flex justify-center mt-4">
+                    <a href="/donate"
+                        class="bg-[#90C5BA] text-green font-semibold px-8 py-3 rounded-2xl shadow 
+                       flex items-center gap-3 hover:bg-[#7EB5AA] transition">
+                        Mulai Berdonasi Sekarang
+                        <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24">
+                            <g fill="none">
+                                <path
+                                    d="M24 0v24H0V0zM12.593 23.258l-.011.002l-.071.035l-.02.004l-.014-.004l-.071-.035q-.016-.005-.024.005l-.004.01l-.017.428l.005.02l.01.013l.104.074l.015.004l.012-.004l.104-.074l.012-.016l.004-.017l-.017-.427q-.004-.016-.017-.018m.265-.113l-.013.002l-.185.093l-.01.01l-.003.011l.018.43l.005.012l.008.007l.201.093q.019.005.029-.008l.004-.014l-.034-.614q-.005-.019-.02-.022m-.715.002a.02.02 0 0 0-.027.006l-.006.014l-.034.614q.001.018.017.024l.015-.002l.201-.093l.01-.008l.004-.011l.017-.43l-.003-.012l-.01-.01z" />
+                                <path fill="currentColor"
+                                    d="m14.707 5.636l5.657 5.657a1 1 0 0 1 0 1.414l-5.657 5.657a1 1 0 0 1-1.414-1.414l3.95-3.95H4a1 1 0 1 1 0-2h13.243l-3.95-3.95a1 1 0 1 1 1.414-1.414" />
+                            </g>
+                        </svg>
+                    </a>
                 </div>
             </div>
+        </main>
 
-            <div class=" bg-[#fbf7f0]"></div>
-        </footer>
+
+        {{-- Footer ges --}}
+
     </main>
 </x-layout>
