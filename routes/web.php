@@ -2,13 +2,11 @@
 
 use Illuminate\Support\Facades\Route;
 use App\Http\Controllers\MapController;
+use App\Http\Controllers\MenuController;
 
-// Route::get('/', function () {
-//   return view('welcome');
-// });
 
+
+Route::get('/', [MenuController::class, 'index'])->name('landing');
+
+//maps
 Route::get('/maps', [MapController::class, 'index'])->name('maps.index');
-
-Route::get('/', function () {
-  return view('landing-page');
-});

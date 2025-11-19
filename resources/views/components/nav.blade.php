@@ -23,10 +23,30 @@
                     rounded-
                     items-start md:items-center">
 
-            <a href="#" class="text-white text-sm md:text-md hover:text-green-200">Beranda</a>
-            <a href="#" class="text-white text-sm md:text-md hover:text-green-200">Peta Donasi</a>
-            <a href="#" class="text-white text-sm md:text-md hover:text-green-200">Kirim Donasi</a>
-            <a href="#" class="text-white text-sm md:text-md hover:text-green-200">Tentang</a>
+            <a href="/"
+                class="{{ request()->is('/') ? 'text-green-300 font-semibold' : 'text-white' }}
+          text-sm md:text-md hover:text-green-200">
+                Beranda
+            </a>
+
+            <a href="/maps"
+                class="{{ request()->is('maps') ? 'text-green-300 font-semibold' : 'text-white' }}
+          text-sm md:text-md hover:text-green-200">
+                Peta Donasi
+            </a>
+
+            <a href="/donate"
+                class="{{ request()->is('donate') ? 'text-green-300 font-semibold' : 'text-white' }}
+          text-sm md:text-md hover:text-green-200">
+                Kirim Donasi
+            </a>
+
+            <a href="/about"
+                class="{{ request()->is('about') ? 'text-green-300 font-semibold' : 'text-white' }}
+          text-sm md:text-md hover:text-green-200">
+                Tentang
+            </a>
+
 
             <a href="#"
                 class="text-white text-sm md:text-md px-4 py-2 hover:text-green-200 

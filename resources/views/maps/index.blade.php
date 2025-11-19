@@ -1,45 +1,19 @@
-<!doctype html>
-<html lang="id">
+<x-layout>
 
-<head>
-    <meta charset="utf-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1">
-    <title>Green Drop — Temukan Lokasiku</title>
-    <meta name="csrf-token" content="{{ csrf_token() }}">
 
-    <!-- Tailwind cepat -->
-    <script src="https://cdn.tailwindcss.com"></script>
+    {{-- content Main --}}
+    <div class="relative z-10">
+        <div class="max-w-5xl mx-auto px-6 py-20">
+        </div>
+    </div>
 
-    <!-- Leaflet CSS -->
-    <link rel="stylesheet" href="https://unpkg.com/leaflet@1.9.4/dist/leaflet.css" />
-
-    <style>
-        #map {
-            height: 80vh;
-            min-height: 420px;
-            border-radius: 8px;
-        }
-    </style>
-</head>
-
-<body class="bg-gray-50 text-slate-800">
-    <div class="max-w-6xl mx-auto p-4">
-        <header class="flex items-center justify-between mb-4">
-            <div>
-                <h1 class="text-2xl font-bold">Green Drop</h1>
-                <p class="text-sm text-gray-600">Temukan lokasi Anda — peta gratis (Leaflet + OSM)</p>
-            </div>
-            <div>
-                <a href="{{ route('maps.index') }}"
-                    class="inline-block bg-green-600 text-white px-4 py-2 rounded">Refresh</a>
-            </div>
-        </header>
-
-        <div class="grid grid-cols-1 lg:grid-cols-3 gap-4">
+    {{-- MAP SECTION: gunakan layout saja, taruh di bawah hero/cards --}}
+    <div class="relative z-10 max-w-6xl mx-auto px-6 pb-20">
+        <div class="grid grid-cols-1 lg:grid-cols-3 gap-6">
             <!-- Sidebar -->
             <aside class="lg:col-span-1 bg-white rounded shadow p-4">
                 <h2 class="font-semibold mb-2">Titik Donasi</h2>
-                <div class="space-y-2">
+                <div class="space-y-2 overflow-auto max-h-[60vh]">
                     @foreach ($locations as $loc)
                         <div class="p-2 border rounded hover:bg-green-50 cursor-pointer" data-lat="{{ $loc['lat'] }}"
                             data-lng="{{ $loc['lng'] }}">
@@ -57,21 +31,19 @@
             </aside>
 
             <!-- Map -->
-            <main class="lg:col-span-2 bg-white rounded shadow p-2">
-                <div id="map"></div>
+            <main class="lg:col-span-2 bg-white rounded shadow p-4">
+                <div id="map" class="w-full" style="height: 68vh; min-height: 420px; border-radius: 8px;"></div>
             </main>
         </div>
     </div>
 
-    <script>
-        // Pass locations from PHP
-        const LOCATIONS = @json($locations);
-    </script>
-
-    <!-- Leaflet JS -->
+    {{-- Load Leaflet CSS/JS (letakkan di view karena layout belum include) --}}
+    <link rel="stylesheet" href="https://unpkg.com/leaflet@1.9.4/dist/leaflet.css" />
     <script src="https://unpkg.com/leaflet@1.9.4/dist/leaflet.js"></script>
 
     <script>
+        const LOCATIONS = @json($locations);
+
         // Inisialisasi peta
         const defaultCenter = LOCATIONS.length ? [LOCATIONS[0].lat, LOCATIONS[0].lng] : [-6.200000, 106.816666];
         const map = L.map('map').setView(defaultCenter, 13);
@@ -81,7 +53,7 @@
             attribution: '&copy; OpenStreetMap contributors'
         }).addTo(map);
 
-        // (Opsional) Tampilkan titik donasi — kalau kamu benar2 mau hanya lokasi user, hapus blok ini
+        // donation markers
         const donationLayer = L.layerGroup().addTo(map);
         LOCATIONS.forEach(loc => {
             const m = L.marker([loc.lat, loc.lng]).addTo(donationLayer);
@@ -98,7 +70,6 @@
             const latlng = e.latlng;
             const accuracy = e.accuracy || 20;
 
-            // hapus marker sebelumnya jika ada
             if (userMarker) map.removeLayer(userMarker);
             if (userCircle) map.removeLayer(userCircle);
 
@@ -125,13 +96,11 @@
 
             document.getElementById('locStatus').textContent = 'Meminta izin lokasi...';
 
-            // Leaflet locate (pembungkus navigator.geolocation)
             map.locate({
                 setView: false,
                 maxZoom: 16,
                 enableHighAccuracy: true
             });
-
             map.once('locationfound', onLocationFound);
             map.once('locationerror', onLocationError);
         });
@@ -145,6 +114,7 @@
             });
         });
     </script>
-</body>
 
-</html>
+    {{-- optional: link css custom (green-drop.css) jika ada --}}
+    {{-- <link href="{{ asset('css/green-drop.css') }}" rel="stylesheet"> --}}
+</x-layout>
