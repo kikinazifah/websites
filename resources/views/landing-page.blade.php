@@ -76,7 +76,6 @@
                     </div>
                 </div>
 
-                {{-- Card 2 (featured / fokus) --}}
                 <div class="stat-card stat-card--featured">
                     <div class="stat-icon" aria-hidden="true">
                         <!-- box icon -->
@@ -119,5 +118,6 @@
     </div>
 
 
-    {{-- coding here --}}
+    {{-- coding disini --}}
+
 </x-layout>
