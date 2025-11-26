@@ -97,8 +97,11 @@
         <div class="max-w-6xl mx-auto mt-5 grid grid-cols-1 md:grid-cols-3 gap-6 px-6">
 
             {{-- Card 1 --}}
-            <div class="bg-white  px-4 py-8 rounded-xl border border-gray-200 shadow-sm">
+            <div
+                class="bg-white  px-4 py-8 rounded-xl border border-gray-200 shadow-sm transform transition-all duration-500 ease-out
+    hover:scale-105 hover:-translate-y-2 relative">
                 <div class="flex flex-col gap-4">
+
 
                     {{-- Icon upload --}}
                     <svg xmlns="http://www.w3.org/2000/svg" width="35" height="35" viewBox="0 0 24 24">
@@ -118,7 +121,9 @@
             </div>
 
             {{-- Card 2 --}}
-            <div class="bg-white  px-4 py-8 rounded-xl border border-gray-200 shadow-sm">
+            <div
+                class="bg-white  px-4 py-8 rounded-xl border border-gray-200 shadow-sm transform transition-all duration-500 ease-out
+    hover:scale-105 hover:-translate-y-2 relative">
                 <div class="flex flex-col gap-4">
 
                     {{-- Icon upload --}}
@@ -139,7 +144,9 @@
             </div>
 
             {{-- Card 3 --}}
-            <div class="bg-white  px-4 py-8 rounded-xl border border-gray-200 shadow-sm">
+            <div
+                class="bg-white  px-4 py-8 rounded-xl border border-gray-200 shadow-sm transform transition-all duration-500 ease-out
+    hover:scale-105 hover:-translate-y-2 relative">
                 <div class="flex flex-col gap-4">
 
                     {{-- Icon upload --}}
