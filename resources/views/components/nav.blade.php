@@ -1,7 +1,7 @@
 <header class="fixed inset-x-0 top-4 z-50 flex justify-center px-4">
     <nav
         class="backdrop-blur-md bg-green border border-white/30 shadow-lg
-           px-4 py-2 md:px-4 md:py-1 rounded-2xl flex items-center gap-3 md:gap-10 relative">
+           px-4 py-2 md:px-4 md:py-1 rounded-2xl flex items-center gap-50 md:gap-10 relative">
 
         {{-- Hamburger Menu Checkbox --}}
         <input type="checkbox" id="menu-toggle" class="hidden peer" />
@@ -25,7 +25,7 @@
              bg-green md:bg-transparent
              p-6 md:p-0
              rounded-xl
-             items-start md:items-center shadow-xl md:shadow-none">
+             items-center md:items-center shadow-xl md:shadow-none">
 
             {{-- Link: Beranda --}}
             <a href="/"
@@ -133,8 +133,6 @@ active:scale-95 cursor-pointer select-none">
 
                 @endguest
             </div>
-
-
         </div>
     </nav>
 </header>
