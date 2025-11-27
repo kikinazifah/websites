@@ -34,12 +34,16 @@
 
             {{-- Card 1 --}}
             <div class="flex flex-col items-center">
-                <div class="w-14 h-14 rounded-full bg-green flex items-center justify-center mb-4">
+                <div class="w-14 h-14 rounded-full bg-card flex items-center justify-center mb-4">
                     {{-- Icon wong --}}
-                    <svg xmlns="http://www.w3.org/2000/svg" class="w-7 h-7 text-card" fill="none" viewBox="0 0 24 24"
-                        stroke="currentColor">
-                        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="1.7" d="M17 20v-2a4 4 0 00-3-3.87M9 14.13A4 4 0 006 18v2m6-10a3 3 0 11-6 0 3 3 0 016 0zm6
-                                 3a3 3 0 11-6 0 3 3 0 016 0z" />
+                    <svg xmlns="http://www.w3.org/2000/svg" width="35" height="35" viewBox="0 0 48 48">
+                        <g fill="none" stroke="#2f5d50" stroke-linecap="round" stroke-width="4">
+                            <path
+                                d="M10 19s-5.143 2-6 9m34-9s5.143 2 6 9m-26-9s4.8 1.167 6 7m6-7s-4.8 1.167-6 7m-4 8s-4.2.75-6 6m14-6s4.2.75 6 6" />
+                            <circle cx="24" cy="31" r="5" stroke-linejoin="round" />
+                            <circle cx="34" cy="14" r="6" stroke-linejoin="round" />
+                            <circle cx="14" cy="14" r="6" stroke-linejoin="round" />
+                        </g>
                     </svg>
                 </div>
                 <p class="text-2xl font-semibold text-[#1d3f32] mb-1">200+</p>
@@ -48,12 +52,11 @@
 
             {{-- Card 2 --}}
             <div class="flex flex-col items-center">
-                <div class="w-14 h-14 rounded-full bg-green flex items-center justify-center mb-4">
+                <div class="w-14 h-14 rounded-full bg-card flex items-center justify-center mb-4">
                     {{-- Icon box --}}
-                    <svg xmlns="http://www.w3.org/2000/svg" class="w-7 h-7 text-card" fill="none" viewBox="0 0 24 24"
-                        stroke="currentColor">
-                        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="1.7"
-                            d="M20.25 7.5L12 3 3.75 7.5M20.25 7.5L12 12m8.25-4.5V16.5L12 21m0-9L3.75 7.5M12 12v9" />
+                    <svg xmlns="http://www.w3.org/2000/svg" width="35" height="35" viewBox="0 0 16 16">
+                        <path fill="#2f5d50"
+                            d="M6.923 1.378a3 3 0 0 1 2.154 0l4.962 1.908a1.5 1.5 0 0 1 .961 1.4v6.626a1.5 1.5 0 0 1-.961 1.4l-4.962 1.909a3 3 0 0 1-2.154 0l-4.961-1.909a1.5 1.5 0 0 1-.962-1.4V4.686a1.5 1.5 0 0 1 .962-1.4zm1.795.933a2 2 0 0 0-1.436 0l-1.384.533l5.59 2.116l1.948-.834zM14 4.971L8.5 7.33v6.428q.11-.028.218-.07l4.962-1.908a.5.5 0 0 0 .32-.467zm-6.5 8.786V7.33L2 4.972v6.34a.5.5 0 0 0 .32.467l4.962 1.908q.107.042.218.07M2.564 4.126L8 6.456l2.164-.928l-5.667-2.146z" />
                     </svg>
                 </div>
                 <p class="text-2xl font-semibold text-[#1d3f32] mb-1">1,200+</p>
@@ -62,10 +65,10 @@
 
             {{-- Card 3 --}}
             <div class="flex flex-col items-center">
-                <div class="w-14 h-14 rounded-full bg-green flex items-center justify-center mb-4">
+                <div class="w-14 h-14 rounded-full bg-card flex items-center justify-center mb-4">
                     {{-- Icon heart --}}
-                    <svg xmlns="http://www.w3.org/2000/svg" class="w-7 h-7 text-card" fill="none" viewBox="0 0 24 24"
-                        stroke="currentColor">
+                    <svg xmlns="http://www.w3.org/2000/svg" class="w-7 h-7 text-green" fill="none"
+                        viewBox="0 0 24 24" stroke="currentColor">
                         <path stroke-linecap="round" stroke-linejoin="round" stroke-width="1.7"
                             d="M4.318 6.318a4.5 4.5 0 016.364 0L12 7.636l1.318-1.318a4.5 4.5 0 116.364 6.364L12 20.364l-7.682-7.682a4.5 4.5 0 010-6.364z" />
                     </svg>
