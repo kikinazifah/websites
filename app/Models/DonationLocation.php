@@ -23,4 +23,9 @@ class DonationLocation extends Model
         'items',
         'note',
     ];
+
+    public function donations()
+    {
+        return $this->hasMany(Donation::class, 'donation_location_id');
+    }
 }

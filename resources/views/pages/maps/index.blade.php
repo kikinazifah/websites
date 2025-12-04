@@ -26,7 +26,7 @@
                                     data-lat="{{ $loc->lat }}" data-lng="{{ $loc->lng }}">
                                     <div
                                         class="flex-shrink-0 w-11 h-11 rounded-lg bg-emerald-50 flex items-center justify-center text-emerald-800">
-                                        <!-- pin icon -->
+                                        {{-- pin icon --}}
                                         <svg class="w-6 h-6" viewBox="0 0 24 24" fill="none"
                                             xmlns="http://www.w3.org/2000/svg">
                                             <path
@@ -75,11 +75,20 @@
                                         @if (!empty($loc->note))
                                             <div class="mt-3 text-xs text-gray-400">{{ $loc->note }}</div>
                                         @endif
+
+                                        {{-- tombol donasi --}}
+                                        <div class="mt-4">
+                                            <button type="button"
+                                                onclick="event.stopPropagation(); window.location.href='{{ route('maps.donate', $loc->id) }}'"
+                                                class="w-full text-xs font-medium bg-emerald-600 hover:bg-emerald-700 text-white py-2 rounded-lg shadow-sm">
+                                                Donasi ke tempat ini
+                                            </button>
+                                        </div>
                                     </div>
                                 </div>
                             @endforeach
-
                         </div>
+
 
                         <div class="mt-6">
                             <button id="locateBtn"

@@ -191,42 +191,134 @@
                     <p class="text-gray-600 text-sm">Isi formulir di bawah ini untuk mengirimkan donasi Anda</p>
                 </div>
 
+                {{-- INFO / ALERT TITIK DONASI --}}
+                @if (!empty($selectedLocation))
+                    {{-- Jika SUDAH ada titik donasi --}}
+                    <div
+                        class="mb-6 p-4 rounded-lg bg-[#e3f3ea] border border-emerald-100 flex items-start justify-between gap-3">
+                        <div class="flex items-start gap-3">
+                            <div
+                                class="w-9 h-9 rounded-full bg-[#2f5d50] flex items-center justify-center text-white flex-shrink-0">
+                                {{-- ikon pin kecil --}}
+                                <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24"
+                                    viewBox="0 0 24 24">
+                                    <path fill="currentColor"
+                                        d="M12 11.5A2.5 2.5 0 0 1 9.5 9A2.5 2.5 0 0 1 12 6.5A2.5 2.5 0 0 1 14.5 9a2.5 2.5 0 0 1-2.5 2.5M12 2a7 7 0 0 0-7 7c0 5.25 7 13 7 13s7-7.75 7-13a7 7 0 0 0-7-7" />
+                                </svg>
+                            </div>
+                            <div>
+                                <p class="text-[11px] uppercase tracking-wide text-emerald-700 font-semibold">
+                                    Titik Donasi Tujuan
+                                </p>
+                                <p class="text-sm font-semibold text-[#1d3f32]">
+                                    {{ $selectedLocation->name }}
+                                </p>
+                                <p class="text-xs text-gray-600">
+                                    {{ $selectedLocation->address }}
+                                </p>
+                            </div>
+                        </div>
+
+                        {{-- Tombol ganti lokasi --}}
+                        <div class="flex-shrink-0">
+                            <a href="{{ route('maps.index') }}"
+                                class="inline-flex items-center gap-1 text-xs px-3 py-1.5 rounded-full border border-emerald-500 text-emerald-700 hover:bg-emerald-50 transition">
+                                <svg xmlns="http://www.w3.org/2000/svg" class="w-3.5 h-3.5" viewBox="0 0 24 24"
+                                    fill="none" stroke="currentColor" stroke-width="1.7" stroke-linecap="round"
+                                    stroke-linejoin="round">
+                                    <path d="M15 18l-6-6 6-6" />
+                                </svg>
+                                Ganti lokasi
+                            </a>
+                        </div>
+                    </div>
+                @else
+                    {{-- Jika BELUM memilih titik donasi --}}
+                    <div class="mb-6 p-4 rounded-lg bg-yellow-50 border border-yellow-200 flex items-start gap-3">
+                        <div class="mt-0.5">
+                            <svg xmlns="http://www.w3.org/2000/svg" class="w-5 h-5 text-yellow-500"
+                                viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8"
+                                stroke-linecap="round" stroke-linejoin="round">
+                                <circle cx="12" cy="12" r="10" />
+                                <line x1="12" y1="8" x2="12" y2="13" />
+                                <circle cx="12" cy="16.5" r="0.8" fill="currentColor" stroke="none" />
+                            </svg>
+                        </div>
+                        <div>
+                            <p class="text-sm font-semibold text-yellow-800">
+                                Anda belum memilih titik donasi.
+                            </p>
+                            <p class="text-xs text-yellow-700 mt-1">
+                                Silakan pilih lokasi donasi terlebih dahulu melalui halaman peta agar tim kami tahu
+                                donasi ini ditujukan ke titik mana.
+                            </p>
+                            <a href="{{ route('maps.index') }}"
+                                class="inline-flex items-center gap-1 mt-2 text-xs px-3 py-1.5 rounded-full bg-yellow-500 text-white hover:bg-yellow-600 transition">
+                                Pilih titik donasi
+                            </a>
+                        </div>
+                    </div>
+                @endif
+
+                @if (session('success'))
+                    <div class="mb-4 p-3 rounded-lg bg-emerald-50 border border-emerald-200 text-sm text-emerald-800">
+                        {{ session('success') }}
+                    </div>
+                @endif
+
                 {{-- FORM FIELD --}}
-                <form class="space-y-6">
+                <form class="space-y-6" method="POST" action="{{ route('donation.store') }}"
+                    enctype="multipart/form-data">
+                    @csrf
+
+                    {{-- kalau datang dari maps, kirimkan id lokasi --}}
+                    @if (!empty($selectedLocation))
+                        <input type="hidden" name="donation_location_id" value="{{ $selectedLocation->id }}">
+                    @endif
 
                     <div>
                         <label class="text-sm font-medium text-gray-700">Nama Lengkap *</label>
-                        <input type="text"
+                        <input type="text" name="donor_name"
                             class="w-full mt-1 p-3 rounded-lg shadow-sm bg-[#faf6f2] border border-gray-200 focus:ring-[#256049] focus:border-[#256049]">
                     </div>
 
-
                     <div>
                         <label class="text-sm font-medium text-gray-700">Nomor Telepon *</label>
-                        <input type="text" placeholder="08xx xxxx xxxx"
+                        <input type="text" name="phone" placeholder="08xx xxxx xxxx"
                             class="w-full mt-1 p-3 rounded-lg shadow-sm bg-[#faf6f2] border border-gray-200 focus:ring-[#256049] focus:border-[#256049]">
                     </div>
 
                     <div>
                         <label class="text-sm font-medium text-gray-700">Alamat Lengkap *</label>
-                        <textarea rows="3" placeholder="masukan alamat lengkap untuk pengambilan atau pengantaran donasi"
+                        <textarea name="address" rows="3"
+                            placeholder="masukan alamat lengkap untuk pengambilan atau pengantaran donasi"
                             class="w-full mt-1 p-3 rounded-lg shadow-sm bg-[#faf6f2] border border-gray-200 focus:ring-[#256049] focus:border-[#256049]"></textarea>
                     </div>
 
                     <div>
                         <label class="text-sm font-medium text-gray-700">Jenis Barang *</label>
-                        <select
+                        <select name="item_type"
                             class="w-full mt-1 p-3 rounded-lg shadow-sm bg-[#faf6f2] border border-gray-200 focus:ring-[#256049] focus:border-[#256049]">
+                            <option value="">Pilih Jenis Barang</option>
+                            <option value="laptop">Laptop</option>
+                            <option value="mouse">Mouse</option>
+                            {{-- dst ... --}}
+                        </select>
+                    </div>
 
-                            <option>Pilih Jenis Barang</option>
-                            <option>laptop</option>
-                            <option>Mouse</option>
+                    <div>
+                        <label class="text-sm font-medium text-gray-700">Jenis Pengantaran *</label>
+                        <select name="delivery_type"
+                            class="w-full mt-1 p-3 rounded-lg shadow-sm bg-[#faf6f2] border border-gray-200 focus:ring-[#256049] focus:border-[#256049]">
+                            <option value="">Pilih Jenis Pengantaran</option>
+                            <option value="jemput">Jemput Donasi</option>
+                            <option value="antar">Antar Donasi</option>
                         </select>
                     </div>
 
                     <div>
                         <label class="text-sm font-medium text-gray-700">Deskripsi Barang *</label>
-                        <textarea rows="3"
+                        <textarea name="item_description" rows="3"
                             class="w-full mt-1 p-3 rounded-lg shadow-sm bg-[#faf6f2] border border-gray-200 focus:ring-[#256049] focus:border-[#256049]"></textarea>
                     </div>
 
@@ -234,14 +326,11 @@
                         <label class="text-sm font-medium text-gray-700">Foto Barang (Opsional)</label>
 
                         <div onclick="document.getElementById('fotoUpload').click()"
-                            class="w-full rounded-lg p-6 flex flex-col items-center justify-center text-gray-600
-           bg-[#faf6f2] border border-gray-200 shadow-sm cursor-pointer">
+                            class="w-full rounded-lg p-6 flex flex-col items-center justify-center text-gray-600 bg-[#faf6f2] border border-gray-200 shadow-sm cursor-pointer">
 
-                            {{-- Input File Asli (disembunyikan) --}}
-                            <input type="file" id="fotoUpload" name="foto[]" accept="image/png, image/jpeg"
+                            <input type="file" id="fotoUpload" name="photos[]" accept="image/png, image/jpeg"
                                 class="hidden" multiple>
 
-                            {{-- Upload Icon --}}
                             <svg xmlns="http://www.w3.org/2000/svg" class="w-10 h-10 mb-2" viewBox="0 0 24 24">
                                 <path fill="#256049"
                                     d="M5.616 20q-.691 0-1.153-.462T4 18.384V5.616q0-.691.463-1.153T5.616 4h5.903q.214 0 .357.143t.143.357t-.143.357t-.357.143H5.616q-.231 0-.424.192T5 5.616v12.769q0 .23.192.423t.423.192h5.904q.214 0 .357.143t.143.357t-.143.357t-.357.143zm12.444-7.5H9.692q-.213 0-.356-.143T9.192 12t.143-.357t.357-.143h8.368l-1.971-1.971q-.141-.14-.15-.338q-.01-.199.15-.364q.159-.165.353-.168q.195-.003.36.162l2.614 2.613q.242.243.242.566t-.243.566l-2.613 2.613q-.146.146-.347.153t-.366-.159q-.16-.165-.157-.357t.162-.35z" />
@@ -250,8 +339,6 @@
                             <p class="text-sm">Klik untuk upload foto</p>
                             <p class="text-xs text-gray-500">Max 3 foto (JPG, PNG)</p>
                         </div>
-
-
                     </div>
 
                     <button class="w-full bg-[#256049] hover:bg-[#1e4a3e] text-white py-3 rounded-lg font-medium">
@@ -260,6 +347,9 @@
 
                 </form>
             </div>
+
+
+
 
             {{-- Ini card kanan gess --}}
             <div class="bg-white rounded-xl  p-8 shadow-sm h-fit">

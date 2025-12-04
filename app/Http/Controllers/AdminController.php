@@ -2,23 +2,25 @@
 
 namespace App\Http\Controllers;
 
+use App\Models\Donation;
 use App\Models\DonationLocation;
 use App\Models\User;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Session;
+use Illuminate\Support\Facades\Storage;
 
 class AdminController extends Controller
 {
     public function HalamanAdmin()
     {
-        if (!Session::has('role') || !Auth::check()) {
+        if (! Session::has('role') || ! Auth::check()) {
             return redirect()->route('login')
                 ->with('error', 'Silakan login terlebih dahulu');
         }
 
         $role = Session::get('role');
-        if (!in_array($role, ['admin'])) {
+        if (! in_array($role, ['admin'])) {
             abort(403, 'Akses ditolak');
         }
 
@@ -27,13 +29,13 @@ class AdminController extends Controller
 
     public function HalamanTitikDonasi(Request $request)
     {
-        if (!Session::has('role') || !Auth::check()) {
+        if (! Session::has('role') || ! Auth::check()) {
             return redirect()->route('login')
                 ->with('error', 'Silakan login terlebih dahulu');
         }
 
         $role = Session::get('role');
-        if (!in_array($role, ['admin'])) {
+        if (! in_array($role, ['admin'])) {
             abort(403, 'Akses ditolak');
         }
 
@@ -67,7 +69,7 @@ class AdminController extends Controller
 
     public function HalamanTambahTitikDonasi()
     {
-        if (!Session::has('role') || !Auth::check()) {
+        if (! Session::has('role') || ! Auth::check()) {
             return redirect()->route('login')
                 ->with('error', 'Silakan login terlebih dahulu');
         }
@@ -103,7 +105,7 @@ class AdminController extends Controller
 
     public function HalamanEditDonasi($id)
     {
-        if (!Session::has('role') || !Auth::check()) {
+        if (! Session::has('role') || ! Auth::check()) {
             return redirect()->route('login')->with('error', 'Silakan login terlebih dahulu');
         }
 
@@ -136,47 +138,45 @@ class AdminController extends Controller
 
     public function HalamanDonasi(Request $request)
     {
-        if (!Session::has('role') || !Auth::check()) {
+        if (! Session::has('role') || ! Auth::check()) {
             return redirect()->route('login')
                 ->with('error', 'Silakan login terlebih dahulu');
         }
 
         $role = Session::get('role');
-        if (!in_array($role, ['admin'])) {
+        if (! in_array($role, ['admin'])) {
             abort(403, 'Akses ditolak');
         }
 
         // Search
         $search = $request->get('search');
 
-        $query = DonationLocation::query()->orderBy('id');
+        $query = Donation::query()
+            ->with(['user', 'location']) // kalau relasi sudah dibuat
+            ->orderBy('id', 'desc');
 
         if ($search) {
             $query->where(function ($q) use ($search) {
-                $q->where('name', 'like', "%{$search}%")
+                $q->where('donor_name', 'like', "%{$search}%")
+                    ->orWhere('phone', 'like', "%{$search}%")
                     ->orWhere('address', 'like', "%{$search}%")
-                    ->orWhere('phone', 'like', "%{$search}%");
+                    ->orWhere('item_type', 'like', "%{$search}%")
+                    ->orWhere('delivery_type', 'like', "%{$search}%");
             });
         }
 
         // Pagination
-        $locations = $query->paginate(10)->withQueryString();
-        $page = $locations->currentPage();
-        $perPage = $locations->perPage();
-        $totalPages = $locations->lastPage();
+        $donations = $query->paginate(10)->withQueryString();
 
         return view('pages.admin.donasi', compact(
-            'locations',
+            'donations',
             'search',
-            'page',
-            'perPage',
-            'totalPages'
         ));
     }
 
-    public function HalamanEditDonation($id)
+    public function HalamanDetailDonation($id)
     {
-        if (!Session::has('role') || !Auth::check()) {
+        if (! Session::has('role') || ! Auth::check()) {
             return redirect()->route('login')->with('error', 'Silakan login terlebih dahulu');
         }
 
@@ -184,16 +184,30 @@ class AdminController extends Controller
             abort(403, 'Akses ditolak');
         }
 
-        $donation = DonationLocation::findOrFail($id);
+        // ambil data dari tabel donations
+        $donation = Donation::findOrFail($id);
 
-        return view('pages.admin.edit-donasi', compact('donation'));
+        return view('pages.admin.detail-donasi', compact('donation'));
+    }
+
+    public function UpdateDonasiStatus(Request $request, $id)
+    {
+        $request->validate([
+            'status' => 'required|in:pending,diproses,selesai,dibatalkan',
+        ]);
+
+        $donation = Donation::findOrFail($id);
+        $donation->status = $request->status;
+        $donation->save();
+
+        return back()->with('success', 'Status donasi berhasil diperbarui.');
     }
 
     // This crud edit donasi
 
     public function HalamanPengguna(Request $request)
     {
-        if (!Session::has('role') || !Auth::check()) {
+        if (! Session::has('role') || ! Auth::check()) {
             return redirect()->route('login')
                 ->with('error', 'Silakan login terlebih dahulu');
         }
@@ -220,7 +234,7 @@ class AdminController extends Controller
 
     public function toggleStatus($id)
     {
-        if (!Session::has('role') || Session::get('role') !== 'admin') {
+        if (! Session::has('role') || Session::get('role') !== 'admin') {
             abort(403, 'Akses ditolak');
         }
 

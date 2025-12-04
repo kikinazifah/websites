@@ -15,6 +15,10 @@ Route::get('/maps', [MapController::class, 'index'])->name('maps.index');
 
 // donation
 Route::get('/donate', [DonationController::class, 'donation'])->name('donation.index');
+Route::get('/maps/donate/{location}', [MapController::class, 'donateToLocation'])->name('maps.donate');
+Route::post('/donate', [DonationController::class, 'store'])
+    ->middleware('auth')
+    ->name('donation.store');
 
 // profile
 Route::get('/profile', function () {
@@ -59,5 +63,5 @@ Route::get('/pengguna', [AdminController::class, 'HalamanPengguna'])->name('admi
 Route::post('/admin/pengguna/{id}/toggle-status', [AdminController::class, 'toggleStatus'])->name('admin.users.toggleStatus');
 
 Route::get('/admin/donasi', [AdminController::class, 'HalamanDonasi'])->name('admin.donasi');
-Route::get('/admin/donasi/{id}/edit', [AdminController::class, 'HalamanEditDonation'])->name('admin.donasi.edit');
-
+Route::get('/admin/donasi/{id}/edit', [AdminController::class, 'HalamanDetailDonation'])->name('admin.donasi.edit');
+Route::patch('/admin/donasi/{id}/update-status', [AdminController::class, 'UpdateDonasiStatus'])->name('admin.donasi.update-status');
