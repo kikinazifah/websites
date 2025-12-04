@@ -58,3 +58,6 @@ Route::get('/pengguna', [AdminController::class, 'HalamanPengguna'])->name('admi
 
 Route::post('/admin/pengguna/{id}/toggle-status', [AdminController::class, 'toggleStatus'])->name('admin.users.toggleStatus');
 
+Route::get('/admin/donasi', [AdminController::class, 'HalamanDonasi'])->name('admin.donasi');
+Route::get('/admin/donasi/{id}/edit', [AdminController::class, 'HalamanEditDonation'])->name('admin.donasi.edit');
+
