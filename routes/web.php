@@ -1,12 +1,14 @@
 <?php
 
+use Illuminate\Support\Facades\Route;
+use App\Http\Controllers\MapController;
 use App\Http\Controllers\AuthController;
+use App\Http\Controllers\MenuController;
+use App\Http\Controllers\AboutController;
+use App\Http\Controllers\AdminController;
+use App\Http\Controllers\ProfileController;
 use App\Http\Controllers\DonationController;
 use App\Http\Controllers\GoogleAuthController;
-use App\Http\Controllers\MapController;
-use App\Http\Controllers\MenuController;
-use App\Http\Controllers\AdminController;
-use Illuminate\Support\Facades\Route;
 
 Route::get('/', [MenuController::class, 'index'])->name('landing');
 
@@ -21,27 +23,22 @@ Route::post('/donate', [DonationController::class, 'store'])
     ->name('donation.store');
 
 // profile
-Route::get('/profile', function () {
-    return view('pages.profile.index');
-})->name('profile.index');
-
+Route::middleware('auth')->group(function () {
+    Route::get('/profile', [ProfileController::class, 'index'])->name('profile.index');
+    Route::post('/profile/update', [ProfileController::class, 'update'])->name('profile.update'); // Route baru
+});
 
 // about
-Route::get('/about', function () {
-    return view('pages.tentang.index');
-})->name('about.index');
+Route::get('/about', [AboutController::class, 'index'])->name('about.index');
 
-// login
+// Auth
 Route::get('/login', [AuthController::class, 'index'])->name('login');
 Route::post('/login', [AuthController::class, 'login'])->name('login.post');
-
 Route::get('/register', [AuthController::class, 'showRegisterForm'])->name('register');
 Route::post('/register', [AuthController::class, 'register'])->name('register.post');
-
 Route::post('/logout', [AuthController::class, 'logout'])->name('logout');
 
 // login google
-
 Route::get('/auth/google/redirect', [GoogleAuthController::class, 'redirect'])
     ->name('google.redirect')
     ->middleware('guest');
