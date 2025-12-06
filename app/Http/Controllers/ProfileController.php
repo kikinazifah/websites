@@ -23,11 +23,6 @@ class ProfileController extends Controller
     public function update(Request $request)
     {
 
-        if (!Session::has('role') || !Auth::check()) {
-            return redirect()->route('login')
-                ->with('error', 'Silakan login terlebih dahulu');
-        }
-
         $role = Session::get('role');
         if (!in_array($role, ['user'])) {
             abort(403, 'Akses ditolak');
