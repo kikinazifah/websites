@@ -62,3 +62,8 @@ Route::post('/admin/pengguna/{id}/toggle-status', [AdminController::class, 'togg
 Route::get('/admin/donasi', [AdminController::class, 'HalamanDonasi'])->name('admin.donasi');
 Route::get('/admin/donasi/{id}/edit', [AdminController::class, 'HalamanDetailDonation'])->name('admin.donasi.edit');
 Route::patch('/admin/donasi/{id}/update-status', [AdminController::class, 'UpdateDonasiStatus'])->name('admin.donasi.update-status');
+
+
+Route::post('/donation/verify', [DonationController::class, 'uploadProof'])
+    ->name('donation.uploadProof')
+    ->middleware('auth');

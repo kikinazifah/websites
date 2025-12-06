@@ -45,7 +45,7 @@
                     </div>
                 </div>
 
-                {{-- 2. FOTO BUKTI (Dari Upload User Profil) --}}
+                {{-- 2. FOTO BUKTI (FIXED VERSION) --}}
                 <div class="flex flex-col items-center">
                     <h3 class="text-sm font-bold text-gray-500 uppercase tracking-wider mb-4 flex items-center gap-2">
                         Bukti Transfer / Serah Terima
@@ -58,31 +58,39 @@
                     <div
                         class="w-full aspect-square max-w-[300px] rounded-2xl overflow-hidden shadow-md border border-gray-200 group relative bg-gray-50">
                         @if ($donation->proof_photo)
-                            <img src="{{ asset('storage/' . $donation->proof_photo) }}" alt="Bukti Donasi"
+                            @php
+                                // LOGIKA PEMBERSIH PATH:
+                                // Menghapus kata 'public/' jika tidak sengaja tersimpan di database
+                                // Mengubah: "public/proofs/foto.jpg" -> Menjadi: "proofs/foto.jpg"
+                                $cleanProofPath = str_replace('public/', '', $donation->proof_photo);
+                            @endphp
+
+                            {{-- Tampilkan Gambar --}}
+                            <img src="{{ asset('storage/' . $cleanProofPath) }}" alt="Bukti Donasi"
                                 class="w-full h-full object-cover transition-transform duration-500 group-hover:scale-110">
-                            {{-- Tombol Lihat Full --}}
-                            <a href="{{ asset('storage/' . $donation->proof_photo) }}" target="_blank"
+
+                            {{-- Tombol Lihat Full (Overlay) --}}
+                            <a href="{{ asset('storage/' . $cleanProofPath) }}" target="_blank"
                                 class="absolute inset-0 bg-black/20 opacity-0 group-hover:opacity-100 transition-opacity flex items-center justify-center">
-                                <span
-                                    class="bg-white/90 text-gray-800 text-xs font-bold px-3 py-1 rounded-full shadow">Lihat
-                                    Bukti</span>
+                                <span class="bg-white/90 text-gray-800 text-xs font-bold px-3 py-1 rounded-full shadow">
+                                    Lihat Bukti
+                                </span>
                             </a>
                         @else
-                            {{-- Placeholder jika belum ada bukti --}}
+                            {{-- Placeholder (Jika Kosong) --}}
                             <div
-                                class="w-full h-full flex flex-col items-center justify-center text-gray-400 p-6 text-center border-2 border-dashed border-gray-300 rounded-2xl">
+                                class="w-full h-full bg-gray-100 flex items-center justify-center text-gray-400 flex-col gap-2">
                                 <svg xmlns="http://www.w3.org/2000/svg" class="h-10 w-10 mb-2 text-gray-300"
                                     fill="none" viewBox="0 0 24 24" stroke="currentColor">
                                     <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
                                         d="M9 12h6m-6 4h6m2 5H7a2 2 0 01-2-2V5a2 2 0 012-2h5.586a1 1 0 01.707.293l5.414 5.414a1 1 0 01.293.707V19a2 2 0 01-2 2z" />
                                 </svg>
-                                <p class="text-sm font-medium">Belum ada bukti yang dikirim.</p>
-                                <p class="text-xs mt-1 text-gray-400">User belum mengupload bukti di profil mereka.</p>
+                                <p class="text-sm font-medium">Belum ada bukti.</p>
+                                <p class="text-xs mt-1 text-gray-400">User belum upload.</p>
                             </div>
                         @endif
                     </div>
                 </div>
-
             </div>
 
 

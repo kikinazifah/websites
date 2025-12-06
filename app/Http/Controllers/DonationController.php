@@ -25,7 +25,7 @@ class DonationController extends Controller
     public function store(Request $request)
     {
         // Pastikan user login
-        if (! Auth::check()) {
+        if (!Auth::check()) {
             return redirect()
                 ->route('login')
                 ->with('error', 'Silakan login terlebih dahulu sebelum mengirim donasi.');
@@ -78,7 +78,39 @@ class DonationController extends Controller
 
         // Redirect + flash message
         return redirect()
-            ->route('donation.index')
+            ->route('profile.index')
+            ->with('success_donation_id', $donation->id)// Kirim ID ke session
             ->with('success', 'Terima kasih, donasi Anda berhasil dikirim dan akan segera diproses.');
+    }
+
+    // TAMBAHAN: Method untuk Upload Bukti Verifikasi
+    public function uploadProof(Request $request)
+    {
+        $request->validate([
+            'donation_id' => 'required|exists:donations,id',
+            'proof_photo' => 'required|image|max:2048', // Max 2MB
+        ]);
+
+        // Cari donasi berdasarkan ID dan pastikan milik user yang sedang login
+        $donation = Donation::where('id', $request->donation_id)
+            ->where('user_id', Auth::id())
+            ->first();
+
+        if (!$donation) {
+            return back()->with('error', 'ID Donasi tidak ditemukan atau bukan milik Anda.');
+        }
+
+        // Upload File
+        if ($request->hasFile('proof_photo')) {
+            $path = $request->file('proof_photo')->store('proofs', 'public');
+
+            $donation->update([
+                'proof_photo' => $path,
+                // Opsional: Langsung ubah status jadi 'diproses' jika mau otomatis
+                // 'status' => 'diproses' 
+            ]);
+        }
+
+        return back()->with('success', 'Bukti verifikasi berhasil diunggah! Admin akan segera mengecek.');
     }
 }

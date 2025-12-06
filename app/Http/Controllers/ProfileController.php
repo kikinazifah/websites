@@ -15,8 +15,16 @@ class ProfileController extends Controller
     public function index()
     {
         $user = Auth::user();
-        $totalDonations = Donation::where('user_id', $user->id)->count();
-        return view('pages.profile.index', compact('user', 'totalDonations'));
+        // $totalDonations = Donation::where('user_id', $user->id)->count();
+
+        // Ambil data donasi milik user, urutkan dari yang terbaru
+        $myDonations = Donation::where('user_id', $user->id)
+            ->latest()
+            ->get();
+
+        // // Hitung total (opsional, sesuai kodemu sebelumnya)
+        $totalDonations = $myDonations->count();
+        return view('pages.profile.index', compact('user', 'totalDonations', 'myDonations'));
     }
 
     // Menyimpan perubahan profile

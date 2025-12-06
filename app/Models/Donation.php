@@ -17,6 +17,7 @@ class Donation extends Model
         'item_description',
         'photos',
         'status',
+        'proof_photo',
     ];
 
     protected $casts = [
