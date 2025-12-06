@@ -14,15 +14,6 @@ class ProfileController extends Controller
     // Menampilkan halaman profile
     public function index()
     {
-        if (!Session::has('role') || !Auth::check()) {
-            return redirect()->route('login')
-                ->with('error', 'Silakan login terlebih dahulu');
-        }
-
-        $role = Session::get('role');
-        if (!in_array($role, ['user'])) {
-            abort(403, 'Akses ditolak');
-        }
         $user = Auth::user();
         $totalDonations = Donation::where('user_id', $user->id)->count();
         return view('pages.profile.index', compact('user', 'totalDonations'));
