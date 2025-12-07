@@ -39,7 +39,7 @@
                 <table class="w-full text-sm border-collapse">
 
                     <thead>
-                        <tr class="bg-emerald-200 text-gray-700">
+                        <tr class="bg-card text-slate-900 text-center">
                             <th class="border px-3 py-2 whitespace-nowrap">No</th>
                             <th class="border px-3 py-2 whitespace-nowrap">ID Pengguna</th>
                             <th class="border px-3 py-2 whitespace-nowrap">Name</th>

@@ -2,8 +2,8 @@
 
 namespace App\Http\Controllers;
 
-use App\Models\DonationLocation;
 use App\Models\Donation;
+use App\Models\DonationLocation;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Storage;
@@ -25,7 +25,7 @@ class DonationController extends Controller
     public function store(Request $request)
     {
         // Pastikan user login
-        if (!Auth::check()) {
+        if (! Auth::check()) {
             return redirect()
                 ->route('login')
                 ->with('error', 'Silakan login terlebih dahulu sebelum mengirim donasi.');
@@ -33,7 +33,7 @@ class DonationController extends Controller
 
         // Validasi input
         $validated = $request->validate([
-            'donation_location_id' => ['required', 'exists:donation_locations,id'], // wajib pilih titik donasi
+            'donation_location_id' => ['required', 'exists:donation_locations,id'],
             'donor_name' => ['required', 'string', 'max:255'],
             'phone' => ['required', 'string', 'max:50'],
             'address' => ['required', 'string'],
@@ -42,23 +42,32 @@ class DonationController extends Controller
             'item_description' => ['required', 'string'],
 
             // foto opsional, max 3 file
-            'photos' => ['sometimes', 'array', 'max:3'],
-            'photos.*' => ['image', 'mimes:jpeg,png,jpg', 'max:2048'], // max 2MB per file
+            'photos' => ['nullable'], // cukup nullable
+            'photos.*' => ['nullable', 'image', 'mimes:jpeg,png,jpg', 'max:2048'], // max 2MB per file
+
         ]);
 
         // Handle upload foto (kalau ada)
         $photoPaths = [];
 
         if ($request->hasFile('photos')) {
-            foreach ($request->file('photos') as $index => $file) {
-                // batas ekstra di sisi server (walau sudah divalidate max:3)
+            $files = $request->file('photos');
+
+            // Kadang bisa berupa single UploadedFile, kadang array
+            if (! is_array($files)) {
+                $files = [$files];
+            }
+
+            foreach ($files as $index => $file) {
+                // batas maksimal 3 file
                 if ($index >= 3) {
                     break;
                 }
 
-                // simpan ke storage/app/public/donations
-                $path = $file->store('donations', 'public');
-                $photoPaths[] = $path;
+                if ($file && $file->isValid()) {
+                    $path = $file->store('donations', 'public'); // storage/app/public/donations
+                    $photoPaths[] = $path;
+                }
             }
         }
 
@@ -96,7 +105,7 @@ class DonationController extends Controller
             ->where('user_id', Auth::id())
             ->first();
 
-        if (!$donation) {
+        if (! $donation) {
             return back()->with('error', 'ID Donasi tidak ditemukan atau bukan milik Anda.');
         }
 
@@ -107,7 +116,7 @@ class DonationController extends Controller
             $donation->update([
                 'proof_photo' => $path,
                 // Opsional: Langsung ubah status jadi 'diproses' jika mau otomatis
-                // 'status' => 'diproses' 
+                // 'status' => 'diproses'
             ]);
         }
 

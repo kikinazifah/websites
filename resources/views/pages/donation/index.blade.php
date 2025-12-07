@@ -174,10 +174,12 @@
 
     {{--  Section 3 --}}
     <section class="bg-[#faf6ef] py-2">
-        <div class="max-w-7xl mx-auto grid grid-cols-1 md:grid-cols-3 gap-8 px-6">
+        <div class="max-w-7xl mx-auto grid grid-cols-1 md:grid-cols-1 gap-8 px-6">
+
 
             {{-- Ini Crad kiri --}}
             <div class="md:col-span-2 bg-white rounded-xl p-8 shadow-sm">
+
 
                 <div class="flex flex-col items-center mb-6">
                     <div class="w-14 h-14 rounded-full bg-[#e3f3ea] flex items-center justify-center mb-3">
@@ -284,7 +286,7 @@
 
                     <div>
                         <label class="text-sm font-medium text-gray-700">Nomor Telepon *</label>
-                        <input type="text" name="phone" placeholder="08xx xxxx xxxx"
+                        <input type="number" name="phone" placeholder="08xx xxxx xxxx"
                             class="w-full mt-1 p-3 rounded-lg shadow-sm bg-[#faf6f2] border border-gray-200 focus:ring-[#256049] focus:border-[#256049]">
                     </div>
 
@@ -328,9 +330,11 @@
                         <div onclick="document.getElementById('fotoUpload').click()"
                             class="w-full rounded-lg p-6 flex flex-col items-center justify-center text-gray-600 bg-[#faf6f2] border border-gray-200 shadow-sm cursor-pointer">
 
+                            {{-- Input File Asli (disembunyikan) --}}
                             <input type="file" id="fotoUpload" name="photos[]" accept="image/png, image/jpeg"
                                 class="hidden" multiple>
 
+                            {{-- Icon upload --}}
                             <svg xmlns="http://www.w3.org/2000/svg" class="w-10 h-10 mb-2" viewBox="0 0 24 24">
                                 <path fill="#256049"
                                     d="M5.616 20q-.691 0-1.153-.462T4 18.384V5.616q0-.691.463-1.153T5.616 4h5.903q.214 0 .357.143t.143.357t-.143.357t-.357.143H5.616q-.231 0-.424.192T5 5.616v12.769q0 .23.192.423t.423.192h5.904q.214 0 .357.143t.143.357t-.143.357t-.357.143zm12.444-7.5H9.692q-.213 0-.356-.143T9.192 12t.143-.357t.357-.143h8.368l-1.971-1.971q-.141-.14-.15-.338q-.01-.199.15-.364q.159-.165.353-.168q.195-.003.36.162l2.614 2.613q.242.243.242.566t-.243.566l-2.613 2.613q-.146.146-.347.153t-.366-.159q-.16-.165-.157-.357t.162-.35z" />
@@ -339,7 +343,21 @@
                             <p class="text-sm">Klik untuk upload foto</p>
                             <p class="text-xs text-gray-500">Max 3 foto (JPG, PNG)</p>
                         </div>
+
+                        {{-- PREVIEW THUMBNAIL --}}
+                        <div id="fotoPreview" class="mt-3 grid grid-cols-3 gap-3 hidden">
+                            {{-- diisi via JS --}}
+                        </div>
+
+                        {{-- LIST NAMA FILE --}}
+                        <div id="fotoFileNames" class="mt-2 space-y-1 text-xs text-gray-600">
+                            {{-- diisi via JS --}}
+                        </div>
+
+                        {{-- Pesan error frontend (optional) --}}
+                        <p id="fotoError" class="mt-1 text-xs text-red-500 hidden"></p>
                     </div>
+
 
                     <button class="w-full bg-[#256049] hover:bg-[#1e4a3e] text-white py-3 rounded-lg font-medium">
                         Kirim Donasi
@@ -352,40 +370,6 @@
 
 
             {{-- Ini card kanan gess --}}
-            <div class="bg-white rounded-xl  p-8 shadow-sm h-fit">
-
-                <div class="flex flex-col items-center mb-6">
-                    <div class="w-14 h-14 rounded-full bg-[#e3f3ea] flex items-center justify-center mb-3">
-                        <svg xmlns="http://www.w3.org/2000/svg" class="w-7 h-7 text-[#256049]" viewBox="0 0 24 24">
-                            <path fill="currentColor"
-                                d="M12 2A10 10 0 1 0 22 12A10 10 0 0 0 12 2m0 18a8 8 0 1 1 8-8a8 8 0 0 1-8 8m-1-5l-3-3l1.4-1.4l1.6 1.6l4.6-4.6L17 9l-6 6Z" />
-                        </svg>
-                    </div>
-
-                    <h2 class="text-2xl font-semibold text-[#1d3f32]">Terima Kasih!</h2>
-                    <p class="text-gray-600 text-sm">Donasi Anda telah berhasil didaftarkan</p>
-                </div>
-
-                {{-- Box No Referensi --}}
-                <div class="border rounded-lg p-4 mb-4">
-                    <p class="text-xs text-gray-500">Nomor Referensi</p>
-                    <p class="font-semibold text-[#1d3f32]">DN-DFF32800 (id donasi ini tu)</p>
-                </div>
-
-                <p class="text-gray-600 text-sm mb-5">
-                    Tim kami akan segera menghubungi Anda untuk mengatur jadwal pengambilan atau konfirmasi pengantaran
-                    donasi.
-                </p>
-
-                <button
-                    class="w-full border border-[#256049] text-[#256049] py-3 rounded-lg font-medium mb-3 hover:bg-[#eaf3f0]">
-                    Kirim Donasi Lagi
-                </button>
-
-                <button class="w-full bg-[#256049] hover:bg-[#1e4a3e] text-white py-3 rounded-lg font-medium">
-                    Kembali Ke Beranda
-                </button>
-            </div>
 
         </div>
     </section>

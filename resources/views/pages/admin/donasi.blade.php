@@ -37,6 +37,7 @@
                             <th class="border px-3 py-2 whitespace-nowrap">Alamat</th>
                             <th class="border px-3 py-2 whitespace-nowrap">Jenis Barang</th>
                             <th class="border px-3 py-2 whitespace-nowrap">Jenis Pengantaran</th>
+                            <th class="border px-3 py-2 whitespace-nowrap">Status Donasi</th>
                             <th class="border px-3 py-2 whitespace-nowrap">Aksi</th>
                         </tr>
                     </thead>
@@ -72,6 +73,27 @@
                                     {{ $donation->delivery_type === 'jemput' ? 'Jemput Donasi' : 'Antar Donasi' }}
                                 </td>
 
+                                <td class="border px-3 py-2 text-center whitespace-nowrap">
+                                    @php
+                                        $statusColors = [
+                                            'pending' => 'bg-yellow-100 text-yellow-700 border-yellow-300',
+                                            'diproses' => 'bg-blue-100 text-blue-700 border-blue-300',
+                                            'selesai' => 'bg-green-100 text-green-700 border-green-300',
+                                            'dibatalkan' => 'bg-red-100 text-red-700 border-red-300',
+                                        ];
+                                        $color =
+                                            $statusColors[$donation->status] ??
+                                            'bg-gray-100 text-gray-700 border-gray-300';
+                                    @endphp
+
+                                    <span
+                                        class="px-3 py-1 rounded-full border text-xs font-semibold {{ $color }}">
+                                        {{ ucfirst($donation->status) }}
+                                    </span>
+                                </td>
+
+
+
                                 <td class="border px-3 py-2 whitespace-nowrap">
 
                                     <div class="flex items-center justify-center gap-3">
@@ -88,7 +110,7 @@
                                         </a>
 
                                         {{-- DROPDOWN UBAH STATUS --}}
-                                        <form action="{{ route('admin.donasi.update-status', $donation->id) }}"
+                                        {{-- <form action="{{ route('admin.donasi.update-status', $donation->id) }}"
                                             method="POST">
                                             @csrf
                                             @method('PATCH')
@@ -109,7 +131,7 @@
                                                     Dibatalkan
                                                 </option>
                                             </select>
-                                        </form>
+                                        </form> --}}
 
                                     </div>
 

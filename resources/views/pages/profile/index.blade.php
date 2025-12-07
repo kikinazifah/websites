@@ -178,10 +178,14 @@
 
                                         {{-- Input File --}}
                                         <div>
-                                            <label class="text-[10px] font-bold text-gray-500 uppercase ml-1">Bukti
-                                                Transfer/Barang</label>
-                                            <label
+                                            <label class="text-[10px] font-bold text-gray-500 uppercase ml-1">
+                                                Bukti Transfer/Barang
+                                            </label>
+
+                                            {{-- LABEL klik area upload --}}
+                                            <label for="proofUpload"
                                                 class="mt-1 flex flex-col items-center justify-center w-full h-24 border-2 border-gray-300 border-dashed rounded-xl cursor-pointer bg-gray-50 hover:bg-green/5 hover:border-green transition-colors group">
+
                                                 <div
                                                     class="flex flex-col items-center justify-center pt-5 pb-6 text-gray-400 group-hover:text-green">
                                                     <svg class="w-6 h-6 mb-1" fill="none" stroke="currentColor"
@@ -193,10 +197,20 @@
                                                     </svg>
                                                     <p class="text-[10px] font-medium">Klik Upload Bukti</p>
                                                 </div>
-                                                <input type="file" name="proof_photo" class="hidden"
-                                                    accept="image/*" required />
                                             </label>
+
+                                            {{-- INPUT FILE TERPISAH, DIHUBUNGKAN DENGAN for="proofUpload" --}}
+                                            <input type="file" id="proofUpload" name="proof_photo" class="hidden"
+                                                accept="image/*" required />
+
+                                            {{-- PREVIEW --}}
+                                            <div id="proofPreview" class="mt-3 hidden">
+                                                <img id="proofPreviewImg"
+                                                    class="w-24 h-24 object-cover rounded-lg border shadow" />
+                                            </div>
                                         </div>
+
+
 
                                         <button type="submit"
                                             class="w-full bg-green text-white font-bold py-2.5 rounded-xl text-xs shadow-md hover:bg-[#254a40] transition-all flex justify-center items-center gap-2">
@@ -217,115 +231,6 @@
 
                     {{-- === BAGIAN KANAN: RIWAYAT & EDIT === --}}
                     <div class="md:w-7/12 lg:w-2/3 p-8 md:p-10 bg-white">
-
-                        {{-- 1. SECTION RIWAYAT DONASI (CARD MEMANJANG) --}}
-                        <div class="mb-12">
-                            <div class="flex justify-between items-center mb-6">
-                                <h3 class="text-xl font-bold text-gray-800 flex items-center gap-2">
-                                    <svg class="w-5 h-5 text-green" fill="none" stroke="currentColor"
-                                        viewBox="0 0 24 24">
-                                        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
-                                            d="M9 5H7a2 2 0 00-2 2v12a2 2 0 002 2h10a2 2 0 002-2V7a2 2 0 00-2-2h-2M9 5a2 2 0 002 2h2a2 2 0 002-2M9 5a2 2 0 012-2h2a2 2 0 012 2m-3 7h3m-3 4h3m-6-4h.01M9 16h.01">
-                                        </path>
-                                    </svg>
-                                    Riwayat Donasi
-                                </h3>
-                                <span class="text-xs text-gray-400 bg-gray-100 px-2 py-1 rounded-md">Terbaru</span>
-                            </div>
-
-                            {{-- Container Scrollable --}}
-                            <div class="space-y-4 max-h-[400px] overflow-y-auto pr-2 custom-scrollbar">
-                                @forelse($myDonations as $donation)
-                                    {{-- Card Item --}}
-                                    <div
-                                        class="group relative bg-white rounded-2xl border border-gray-100 p-4 shadow-sm hover:shadow-md transition-all duration-300 flex flex-col sm:flex-row items-start sm:items-center justify-between gap-4">
-
-                                        {{-- Kiri: Icon ID & Info --}}
-                                        <div class="flex items-center gap-4 w-full">
-                                            {{-- Box ID --}}
-                                            <div
-                                                class="flex-shrink-0 w-14 h-14 bg-gray-50 rounded-xl flex flex-col items-center justify-center border border-gray-200 text-gray-500 group-hover:border-green/30 group-hover:bg-green/5 transition-colors">
-                                                <span class="text-[9px] uppercase font-bold text-gray-400">ID</span>
-                                                <span
-                                                    class="text-lg font-black text-gray-700 group-hover:text-green">#{{ $donation->id }}</span>
-                                            </div>
-
-                                            <div class="flex-1">
-                                                <h4 class="font-bold text-gray-800 text-sm">{{ $donation->item_type }}
-                                                </h4>
-                                                <p class="text-xs text-gray-500 line-clamp-1 mt-0.5">
-                                                    {{ $donation->item_description }}</p>
-
-                                                <div class="flex items-center gap-3 mt-2">
-                                                    <span class="text-[10px] text-gray-400 flex items-center gap-1">
-                                                        <svg class="w-3 h-3" fill="none" stroke="currentColor"
-                                                            viewBox="0 0 24 24">
-                                                            <path stroke-linecap="round" stroke-linejoin="round"
-                                                                stroke-width="2"
-                                                                d="M8 7V3m8 4V3m-9 8h10M5 21h14a2 2 0 002-2V7a2 2 0 00-2-2H5a2 2 0 00-2 2v12a2 2 0 002 2z">
-                                                            </path>
-                                                        </svg>
-                                                        {{ $donation->created_at->format('d M Y') }}
-                                                    </span>
-
-                                                    {{-- Status Bukti --}}
-                                                    @if ($donation->proof_photo)
-                                                        <span
-                                                            class="text-[10px] text-emerald-600 bg-emerald-50 px-2 py-0.5 rounded-full font-medium flex items-center gap-1">
-                                                            <svg class="w-3 h-3" fill="none" stroke="currentColor"
-                                                                viewBox="0 0 24 24">
-                                                                <path stroke-linecap="round" stroke-linejoin="round"
-                                                                    stroke-width="2" d="M5 13l4 4L19 7"></path>
-                                                            </svg>
-                                                            Bukti Ada
-                                                        </span>
-                                                    @else
-                                                        <span
-                                                            class="text-[10px] text-orange-600 bg-orange-50 px-2 py-0.5 rounded-full font-medium flex items-center gap-1">
-                                                            <svg class="w-3 h-3" fill="none" stroke="currentColor"
-                                                                viewBox="0 0 24 24">
-                                                                <path stroke-linecap="round" stroke-linejoin="round"
-                                                                    stroke-width="2"
-                                                                    d="M12 9v2m0 4h.01m-6.938 4h13.856c1.54 0 2.502-1.667 1.732-3L13.732 4c-.77-1.333-2.694-1.333-3.464 0L3.34 16c-.77 1.333.192 3 1.732 3z">
-                                                                </path>
-                                                            </svg>
-                                                            Butuh Verifikasi
-                                                        </span>
-                                                    @endif
-                                                </div>
-                                            </div>
-                                        </div>
-
-                                        {{-- Kanan: Badge Status --}}
-                                        <div
-                                            class="flex-shrink-0 self-start sm:self-center w-full sm:w-auto text-right">
-                                            @php
-                                                $statusClass = match ($donation->status) {
-                                                    'selesai' => 'bg-green text-white border-green',
-                                                    'diproses' => 'bg-blue-100 text-blue-700 border-blue-200',
-                                                    'dibatalkan' => 'bg-red-100 text-red-700 border-red-200',
-                                                    default
-                                                        => 'bg-yellow-100 text-yellow-700 border-yellow-200', // Pending
-                                                };
-                                            @endphp
-                                            <span
-                                                class="inline-block px-3 py-1 rounded-full text-[10px] font-bold uppercase tracking-wider border {{ $statusClass }}">
-                                                {{ $donation->status }}
-                                            </span>
-                                        </div>
-
-                                    </div>
-                                @empty
-                                    <div
-                                        class="text-center py-8 bg-gray-50 rounded-2xl border border-dashed border-gray-200">
-                                        <p class="text-gray-400 text-sm">Belum ada donasi yang dilakukan.</p>
-                                    </div>
-                                @endforelse
-                            </div>
-                        </div>
-
-                        {{-- Divider --}}
-                        <div class="border-t border-gray-100 my-8"></div>
 
                         {{-- 2. SECTION EDIT PROFILE --}}
                         <div>
@@ -444,6 +349,116 @@
                                 </div>
                             </form>
                         </div>
+                        {{-- Divider --}}
+                        <div class="border-t border-gray-100 my-8"></div>
+                        {{-- 1. SECTION RIWAYAT DONASI (CARD MEMANJANG) --}}
+                        <div class="mb-12">
+                            <div class="flex justify-between items-center mb-6">
+                                <h3 class="text-xl font-bold text-gray-800 flex items-center gap-2">
+                                    <svg class="w-5 h-5 text-green" fill="none" stroke="currentColor"
+                                        viewBox="0 0 24 24">
+                                        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
+                                            d="M9 5H7a2 2 0 00-2 2v12a2 2 0 002 2h10a2 2 0 002-2V7a2 2 0 00-2-2h-2M9 5a2 2 0 002 2h2a2 2 0 002-2M9 5a2 2 0 012-2h2a2 2 0 012 2m-3 7h3m-3 4h3m-6-4h.01M9 16h.01">
+                                        </path>
+                                    </svg>
+                                    Riwayat Donasi
+                                </h3>
+                                <span class="text-xs text-gray-400 bg-gray-100 px-2 py-1 rounded-md">Terbaru</span>
+                            </div>
+
+                            {{-- Container Scrollable --}}
+                            <div class="space-y-4 max-h-[400px] overflow-y-auto pr-2 custom-scrollbar">
+                                @forelse($myDonations as $donation)
+                                    {{-- Card Item --}}
+                                    <div
+                                        class="group relative bg-white rounded-2xl border border-gray-100 p-4 shadow-sm hover:shadow-md transition-all duration-300 flex flex-col sm:flex-row items-start sm:items-center justify-between gap-4">
+
+                                        {{-- Kiri: Icon ID & Info --}}
+                                        <div class="flex items-center gap-4 w-full">
+                                            {{-- Box ID --}}
+                                            <div
+                                                class="flex-shrink-0 w-14 h-14 bg-gray-50 rounded-xl flex flex-col items-center justify-center border border-gray-200 text-gray-500 group-hover:border-green/30 group-hover:bg-green/5 transition-colors">
+                                                <span class="text-[9px] uppercase font-bold text-gray-400">ID</span>
+                                                <span
+                                                    class="text-lg font-black text-gray-700 group-hover:text-green">#{{ $donation->id }}</span>
+                                            </div>
+
+                                            <div class="flex-1">
+                                                <h4 class="font-bold text-gray-800 text-sm">{{ $donation->item_type }}
+                                                </h4>
+                                                <p class="text-xs text-gray-500 line-clamp-1 mt-0.5">
+                                                    {{ $donation->item_description }}</p>
+
+                                                <div class="flex items-center gap-3 mt-2">
+                                                    <span class="text-[10px] text-gray-400 flex items-center gap-1">
+                                                        <svg class="w-3 h-3" fill="none" stroke="currentColor"
+                                                            viewBox="0 0 24 24">
+                                                            <path stroke-linecap="round" stroke-linejoin="round"
+                                                                stroke-width="2"
+                                                                d="M8 7V3m8 4V3m-9 8h10M5 21h14a2 2 0 002-2V7a2 2 0 00-2-2H5a2 2 0 00-2 2v12a2 2 0 002 2z">
+                                                            </path>
+                                                        </svg>
+                                                        {{ $donation->created_at->format('d M Y') }}
+                                                    </span>
+
+                                                    {{-- Status Bukti --}}
+                                                    @if ($donation->proof_photo)
+                                                        <span
+                                                            class="text-[10px] text-emerald-600 bg-emerald-50 px-2 py-0.5 rounded-full font-medium flex items-center gap-1">
+                                                            <svg class="w-3 h-3" fill="none" stroke="currentColor"
+                                                                viewBox="0 0 24 24">
+                                                                <path stroke-linecap="round" stroke-linejoin="round"
+                                                                    stroke-width="2" d="M5 13l4 4L19 7"></path>
+                                                            </svg>
+                                                            Bukti Ada
+                                                        </span>
+                                                    @else
+                                                        <span
+                                                            class="text-[10px] text-orange-600 bg-orange-50 px-2 py-0.5 rounded-full font-medium flex items-center gap-1">
+                                                            <svg class="w-3 h-3" fill="none" stroke="currentColor"
+                                                                viewBox="0 0 24 24">
+                                                                <path stroke-linecap="round" stroke-linejoin="round"
+                                                                    stroke-width="2"
+                                                                    d="M12 9v2m0 4h.01m-6.938 4h13.856c1.54 0 2.502-1.667 1.732-3L13.732 4c-.77-1.333-2.694-1.333-3.464 0L3.34 16c-.77 1.333.192 3 1.732 3z">
+                                                                </path>
+                                                            </svg>
+                                                            Butuh Verifikasi
+                                                        </span>
+                                                    @endif
+                                                </div>
+                                            </div>
+                                        </div>
+
+                                        {{-- Kanan: Badge Status --}}
+                                        <div
+                                            class="flex-shrink-0 self-start sm:self-center w-full sm:w-auto text-right">
+                                            @php
+                                                $statusClass = match ($donation->status) {
+                                                    'selesai' => 'bg-green text-white border-green',
+                                                    'diproses' => 'bg-blue-100 text-blue-700 border-blue-200',
+                                                    'dibatalkan' => 'bg-red-100 text-red-700 border-red-200',
+                                                    default
+                                                        => 'bg-yellow-100 text-yellow-700 border-yellow-200', // Pending
+                                                };
+                                            @endphp
+                                            <span
+                                                class="inline-block px-3 py-1 rounded-full text-[10px] font-bold uppercase tracking-wider border {{ $statusClass }}">
+                                                {{ $donation->status }}
+                                            </span>
+                                        </div>
+
+                                    </div>
+                                @empty
+                                    <div
+                                        class="text-center py-8 bg-gray-50 rounded-2xl border border-dashed border-gray-200">
+                                        <p class="text-gray-400 text-sm">Belum ada donasi yang dilakukan.</p>
+                                    </div>
+                                @endforelse
+                            </div>
+                        </div>
+
+
+
                     </div>
                 </div>
             </div>
