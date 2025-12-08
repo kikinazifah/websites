@@ -24,37 +24,43 @@
                grid grid-cols-1 md:grid-cols-2 min-h-[660px]">
 
         {{-- LEFT PANEL (HIJAU) --}}
-        <div class="relative bg-[#2F5D50] px-10 py-10 text-white">
+        <div class="relative bg-[#2F5D50] px-8 md:px-10 py-10 text-white overflow-hidden">
 
-            {{-- siluet logo di tengah --}}
+            {{-- siluet logo di belakang --}}
             <img src="{{ asset('images/logo.png') }}" alt=""
                 class="pointer-events-none select-none opacity-[0.07] w-[420px]
-                        absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2">
+                absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2">
 
-            {{-- logo + nama --}}
-            <div class="flex items-center gap-3 mb-6 relative z-10">
-                <img src="{{ asset('images/logo.png') }}" alt="GreenDrop" class="h-8 w-auto">
-                <span class="font-semibold text-lg tracking-wide">GreenDrop</span>
+            {{-- isi utama dibikin flex kolom supaya gambar bisa duduk rapi di bawah --}}
+            <div class="relative z-10 flex flex-col h-full">
+
+                {{-- logo + nama --}}
+                <div class="flex items-center gap-3 mb-6">
+                    <img src="{{ asset('images/logo.png') }}" alt="GreenDrop" class="h-8 w-auto">
+                    <span class="font-semibold text-lg tracking-wide">GreenDrop</span>
+                </div>
+
+                {{-- judul + deskripsi --}}
+                <div class="max-w-md">
+                    <h2 class="text-3xl md:text-4xl font-bold leading-tight">
+                        Kolaborasi Donasi <br> Lebih Mudah
+                    </h2>
+                    <p class="text-sm mt-4 opacity-95 leading-relaxed">
+                        Hubungkan barang layak pakai Anda dengan penerima yang membutuhkan,
+                        lewat peta donasi interaktif dan proses yang praktis. Mulai berbagi,
+                        wujudkan dampak nyata bersama GreenDrop.
+                    </p>
+                </div>
+
+                {{-- ilustrasi di bagian bawah, responsif --}}
+                <div class="mt-8 flex-1 flex items-end justify-center md:justify-start">
+                    <img src="{{ asset('images/sign.png') }}" alt="Donasi Illustration"
+                        class="w-48 sm:w-56 md:w-72 lg:w-80 max-w-full h-auto drop-shadow-lg">
+                </div>
+
             </div>
-
-            {{-- judul + deskripsi --}}
-            <div class="relative z-10 max-w-md">
-                <h2 class="text-3xl font-bold leading-tight">
-                    Kolaborasi Donasi <br> Lebih Mudah
-                </h2>
-                <p class="text-sm mt-4 opacity-95 leading-relaxed">
-                    Hubungkan barang layak pakai Anda dengan penerima yang membutuhkan,
-                    lewat peta donasi interaktif dan proses yang praktis.
-                    Mulai berbagi, wujudkan dampak nyata bersama GreenDrop.
-                </p>
-            </div>
-
-            {{-- ilustrasi – geser kiri sedikit, agak turun --}}
-            <img src="{{ asset('images/sign.png') }}" alt="Donasi Illustration"
-                class="absolute w-[340px] md:w-[370px] lg:w-[390px]
-                        right-[-1px] md:right-[-1px] bottom-[-40px] lg:bottom-[-48px] drop-shadow-lg">
-
         </div>
+
 
         {{-- RIGHT PANEL (FORM) --}}
         <div class="px-10 py-12 flex flex-col justify-center bg-[#FFFFFF]">
