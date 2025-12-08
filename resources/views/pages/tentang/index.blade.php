@@ -215,7 +215,7 @@
                     Jika Anda adalah lembaga sosial yang ingin bergabung atau memiliki pertanyaan, jangan ragu untuk
                     menghubungi kami.
                 </p>
-                <a href="mailto:info@petabaik.id"
+                <a href="mailto:info.mygreendrop@gmail.com"
                     class="inline-flex items-center gap-2 px-6 py-3 bg-[#e8f5f3] text-green rounded-xl font-bold hover:bg-green hover:text-white transition-colors duration-300">
                     <svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" viewBox="0 0 24 24"
                         fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"
@@ -223,7 +223,7 @@
                         <rect width="20" height="16" x="2" y="4" rx="2" />
                         <path d="m22 7-8.97 5.7a1.94 1.94 0 0 1-2.06 0L2 7" />
                     </svg>
-                    info@petabaik.id
+                    info.mygreendrop@gmail.com
                 </a>
             </div>
 

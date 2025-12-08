@@ -60,7 +60,7 @@
                                     stroke-linejoin="round"
                                     d="m5.5 7.5l5.636 3.523a2.75 2.75 0 0 0 2.728 0L19.5 7.5" />
                             </svg>
-                            <span>greendrop@gmail.com</span>
+                            <span>info.mygreendrop@gmail.com</span>
                         </div>
                     </div>
 
