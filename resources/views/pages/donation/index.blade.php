@@ -279,49 +279,112 @@
                     @endif
 
                     <div>
-                        <label class="text-sm font-medium text-gray-700">Nama Lengkap *</label>
-                        <input type="text" name="donor_name"
-                            class="w-full mt-1 p-3 rounded-lg shadow-sm bg-[#faf6f2] border border-gray-200 focus:ring-[#256049] focus:border-[#256049]">
+                        <label class="text-sm font-medium text-gray-700">Nama Lengkap <span
+                                class="text-red-500">*</span></label>
+                        <input type="text" name="donor_name" value="{{ old('donor_name') }}" required
+                            minlength="3" maxlength="255" pattern="[a-zA-Z\s\.\,\']+"
+                            title="Hanya huruf, spasi, titik, dan koma yang diperbolehkan"
+                            class="w-full mt-1 p-3 rounded-lg shadow-sm bg-[#faf6f2] border @error('donor_name') border-red-500 @else border-gray-200   @enderror focus:ring-[#256049] focus:border-[#256049]">
+
+                        @error('donor_name')
+                            <p class="text-red-500 text-xs mt-1">{{ $message }}</p>
+                        @enderror
+                    </div>
+
+                    {{-- NOMOR TELEPON --}}
+                    <div>
+                        <label class="text-sm font-medium text-gray-700">Nomor Telepon <span
+                                class="text-red-500">*</span></label>
+                        <input type="tel" name="phone" value="{{ old('phone') }}"
+                            placeholder="Contoh: 081234567890" required minlength="10" maxlength="20"
+                            pattern="^(\+62|62|0)[0-9]{8,15}$" title="Gunakan format 08xx atau 628xx (hanya angka)"
+                            class="w-full mt-1 p-3 rounded-lg shadow-sm bg-[#faf6f2] border @error('phone') border-red-500 @else border-gray-200 @enderror focus:ring-[#256049] focus:border-[#256049]">
+
+                        @error('phone')
+                            <p class="text-red-500 text-xs mt-1">{{ $message }}</p>
+                        @enderror
+                    </div>
+
+                    {{-- ALAMAT LENGKAP --}}
+                    <div>
+                        <label class="text-sm font-medium text-gray-700">Alamat Lengkap <span
+                                class="text-red-500">*</span></label>
+                        <textarea name="address" rows="3" required minlength="10" maxlength="1000"
+                            placeholder="Masukan nama jalan, nomor rumah, RT/RW, dan patokan..."
+                            class="w-full mt-1 p-3 rounded-lg shadow-sm bg-[#faf6f2] border @error('address') border-red-500 @else border-gray-200 @enderror focus:ring-[#256049] focus:border-[#256049]">{{ old('address') }}</textarea>
+
+                        @error('address')
+                            <p class="text-red-500 text-xs mt-1">{{ $message }}</p>
+                        @enderror
                     </div>
 
                     <div>
-                        <label class="text-sm font-medium text-gray-700">Nomor Telepon *</label>
-                        <input type="number" name="phone" placeholder="08xx xxxx xxxx"
-                            class="w-full mt-1 p-3 rounded-lg shadow-sm bg-[#faf6f2] border border-gray-200 focus:ring-[#256049] focus:border-[#256049]">
-                    </div>
+                        <label class="text-sm font-medium text-gray-700">Jenis Barang <span
+                                class="text-red-500">*</span></label>
 
-                    <div>
-                        <label class="text-sm font-medium text-gray-700">Alamat Lengkap *</label>
-                        <textarea name="address" rows="3"
-                            placeholder="masukan alamat lengkap untuk pengambilan atau pengantaran donasi"
-                            class="w-full mt-1 p-3 rounded-lg shadow-sm bg-[#faf6f2] border border-gray-200 focus:ring-[#256049] focus:border-[#256049]"></textarea>
-                    </div>
-
-                    <div>
-                        <label class="text-sm font-medium text-gray-700">Jenis Barang *</label>
-                        <select name="item_type"
+                        {{-- DROPDOWN --}}
+                        <select id="selectItemType" onchange="checkItemType(this)"
                             class="w-full mt-1 p-3 rounded-lg shadow-sm bg-[#faf6f2] border border-gray-200 focus:ring-[#256049] focus:border-[#256049]">
                             <option value="">Pilih Jenis Barang</option>
-                            <option value="laptop">Laptop</option>
-                            <option value="mouse">Mouse</option>
-                            {{-- dst ... --}}
+                            <option value="Pakaian" {{ old('item_type') == 'Pakaian' ? 'selected' : '' }}>Pakaian
+                            </option>
+                            <option value="Buku" {{ old('item_type') == 'Buku' ? 'selected' : '' }}>Buku</option>
+                            <option value="Perabotan" {{ old('item_type') == 'Perabotan' ? 'selected' : '' }}>
+                                Perabotan</option>
+                            <option value="Elektronik" {{ old('item_type') == 'Elektronik' ? 'selected' : '' }}>
+                                Elektronik</option>
+                            <option value="Mainan" {{ old('item_type') == 'Mainan' ? 'selected' : '' }}>Mainan
+                            </option>
+                            <option value="Makanan" {{ old('item_type') == 'Makanan' ? 'selected' : '' }}>Makanan
+                            </option>
+
+                            {{-- Opsi Lainnya --}}
+                            <option value="Lainnya" {{ old('item_type') == 'Lainnya' ? 'selected' : '' }}>Lainnya
+                            </option>
                         </select>
+
+                        {{-- INPUT MANUAL (Tersembunyi secara default) --}}
+                        <div id="manualInputDiv" class="hidden mt-2">
+                            <input type="text" id="manualItemInput" placeholder="Tuliskan jenis barang..."
+                                class="w-full p-3 rounded-lg shadow-sm bg-white border border-gray-200 focus:ring-[#256049] focus:border-[#256049]">
+                            <p class="text-xs text-gray-500 mt-1">*Masukan jenis barang secara spesifik</p>
+                        </div>
+
+                        {{-- Hidden input untuk menampung nilai final yang dikirim ke controller --}}
+                        <input type="hidden" name="item_type" id="finalItemType" value="{{ old('item_type') }}">
+
+                        @error('item_type')
+                            <p class="text-red-500 text-xs mt-1">{{ $message }}</p>
+                        @enderror
                     </div>
 
                     <div>
-                        <label class="text-sm font-medium text-gray-700">Jenis Pengantaran *</label>
-                        <select name="delivery_type"
-                            class="w-full mt-1 p-3 rounded-lg shadow-sm bg-[#faf6f2] border border-gray-200 focus:ring-[#256049] focus:border-[#256049]">
+                        <label class="text-sm font-medium text-gray-700">Jenis Pengantaran <span
+                                class="text-red-500">*</span></label>
+                        <select name="delivery_type" required
+                            class="w-full mt-1 p-3 rounded-lg shadow-sm bg-[#faf6f2] border @error('delivery_type') border-red-500 @else border-gray-200 @enderror focus:ring-[#256049] focus:border-[#256049]">
                             <option value="">Pilih Jenis Pengantaran</option>
-                            <option value="jemput">Jemput Donasi</option>
-                            <option value="antar">Antar Donasi</option>
+                            <option value="jemput" {{ old('delivery_type') == 'jemput' ? 'selected' : '' }}>Jemput
+                                Donasi (Kurir kami datang ke lokasi)</option>
+                            <option value="antar" {{ old('delivery_type') == 'antar' ? 'selected' : '' }}>Antar
+                                Donasi (Anda antar ke lokasi kami)</option>
                         </select>
+
+                        @error('delivery_type')
+                            <p class="text-red-500 text-xs mt-1">{{ $message }}</p>
+                        @enderror
                     </div>
 
                     <div>
-                        <label class="text-sm font-medium text-gray-700">Deskripsi Barang *</label>
-                        <textarea name="item_description" rows="3"
-                            class="w-full mt-1 p-3 rounded-lg shadow-sm bg-[#faf6f2] border border-gray-200 focus:ring-[#256049] focus:border-[#256049]"></textarea>
+                        <label class="text-sm font-medium text-gray-700">Deskripsi Barang <span
+                                class="text-red-500">*</span></label>
+                        <textarea name="item_description" rows="3" required minlength="10" maxlength="2000"
+                            placeholder="Jelaskan kondisi barang, merek, tahun pembelian, dll..."
+                            class="w-full mt-1 p-3 rounded-lg shadow-sm bg-[#faf6f2] border @error('item_description') border-red-500 @else border-gray-200 @enderror focus:ring-[#256049] focus:border-[#256049]">{{ old('item_description') }}</textarea>
+
+                        @error('item_description')
+                            <p class="text-red-500 text-xs mt-1">{{ $message }}</p>
+                        @enderror
                     </div>
 
                     <div>
@@ -365,13 +428,58 @@
 
                 </form>
             </div>
-
-
-
-
-            {{-- Ini card kanan gess --}}
-
         </div>
     </section>
+    {{-- Script ketiak klik jenis lainnya maka di alihkan ke input manual --}}
+    <script>
+        function checkItemType(selectElement) {
+            const manualDiv = document.getElementById('manualInputDiv');
+            const manualInput = document.getElementById('manualItemInput');
+            const finalInput = document.getElementById('finalItemType');
 
+            if (selectElement.value === 'Lainnya') {
+                // 1. Munculkan kotak input manual
+                manualDiv.classList.remove('hidden');
+
+                // 2. Fokus ke kotak input
+                manualInput.focus();
+
+                // 3. Set value final jadi kosong dulu (menunggu user mengetik)
+                finalInput.value = manualInput.value;
+
+                // 4. Tambahkan event listener saat mengetik
+                manualInput.oninput = function() {
+                    finalInput.value = this.value; // Nilai yang dikirim ke server adalah hasil ketikan
+                };
+            } else {
+                // 1. Sembunyikan kotak input manual
+                manualDiv.classList.add('hidden');
+
+                // 2. Nilai yang dikirim ke server adalah pilihan Dropdown
+                finalInput.value = selectElement.value;
+            }
+        }
+
+        // Logika tambahan: Jika validasi gagal dan user sebelumnya memilih "Lainnya" atau mengetik custom
+        document.addEventListener("DOMContentLoaded", function() {
+            const oldVal = "{{ old('item_type') }}";
+            const selectBox = document.getElementById('selectItemType');
+
+            // Cek apakah old value ada di dalam opsi dropdown standar?
+            let existsInDropdown = false;
+            for (let i = 0; i < selectBox.options.length; i++) {
+                if (selectBox.options[i].value === oldVal) {
+                    existsInDropdown = true;
+                    break;
+                }
+            }
+
+            // Jika ada value TAPI tidak ada di dropdown (berarti user mengetik manual sebelumnya)
+            if (oldVal && !existsInDropdown) {
+                selectBox.value = 'Lainnya'; // Set dropdown ke "Lainnya"
+                document.getElementById('manualInputDiv').classList.remove('hidden'); // Buka kotak manual
+                document.getElementById('manualItemInput').value = oldVal; // Isi kotak manual dengan text lama
+            }
+        });
+    </script>
 </x-layout>

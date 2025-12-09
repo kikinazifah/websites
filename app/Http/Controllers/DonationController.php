@@ -25,7 +25,7 @@ class DonationController extends Controller
     public function store(Request $request)
     {
         // Pastikan user login
-        if (! Auth::check()) {
+        if (!Auth::check()) {
             return redirect()
                 ->route('login')
                 ->with('error', 'Silakan login terlebih dahulu sebelum mengirim donasi.');
@@ -34,15 +34,15 @@ class DonationController extends Controller
         // Validasi input
         $validated = $request->validate([
             'donation_location_id' => ['required', 'exists:donation_locations,id'],
-            'donor_name' => ['required', 'string', 'max:255'],
-            'phone' => ['required', 'string', 'max:50'],
-            'address' => ['required', 'string'],
+            'donor_name' => ['required', 'string', 'max:255', 'regex:/^[a-zA-Z\s\.\,\']+$/'],
+            'phone' => ['required', 'min:10', 'max:20', 'string', 'regex:/^(\+62|62|0)[0-9]{8,15}$/'], // Validasi format HP Indonesia (08xx atau 628xx)
+            'address' => ['required', 'string', 'min:10', 'max:1000'],
             'item_type' => ['required', 'string', 'max:100'],
             'delivery_type' => ['required', 'in:jemput,antar'],
-            'item_description' => ['required', 'string'],
+            'item_description' => ['required', 'string', 'min:10', 'max:2000'],
 
             // foto opsional, max 3 file
-            'photos' => ['nullable'], // cukup nullable
+            'photos' => ['nullable'],
             'photos.*' => ['nullable', 'image', 'mimes:jpeg,png,jpg', 'max:2048'], // max 2MB per file
 
         ]);
@@ -54,7 +54,7 @@ class DonationController extends Controller
             $files = $request->file('photos');
 
             // Kadang bisa berupa single UploadedFile, kadang array
-            if (! is_array($files)) {
+            if (!is_array($files)) {
                 $files = [$files];
             }
 
@@ -105,7 +105,7 @@ class DonationController extends Controller
             ->where('user_id', Auth::id())
             ->first();
 
-        if (! $donation) {
+        if (!$donation) {
             return back()->with('error', 'ID Donasi tidak ditemukan atau bukan milik Anda.');
         }
 
