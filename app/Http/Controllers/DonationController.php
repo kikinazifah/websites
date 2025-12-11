@@ -2,24 +2,29 @@
 
 namespace App\Http\Controllers;
 
+use App\Models\User;
 use App\Models\Donation;
-use App\Models\DonationLocation;
 use Illuminate\Http\Request;
+use App\Models\DonationLocation;
 use Illuminate\Support\Facades\Auth;
-use Illuminate\Support\Facades\Storage;
 
 class DonationController extends Controller
 {
     public function donation(Request $request)
     {
         $locationId = $request->query('location');
+        // $donaturAktif = Donation::distinct('user_id')->count('user_id');
+        $donaturAktif = User::where('role', 'user')
+            ->where('status', 'aktif')
+            ->count();
+
 
         $selectedLocation = null;
         if ($locationId) {
             $selectedLocation = DonationLocation::find($locationId);
         }
 
-        return view('pages.donation.index', compact('selectedLocation'));
+        return view('pages.donation.index', compact('selectedLocation', 'donaturAktif'));
     }
 
     public function store(Request $request)
