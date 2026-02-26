@@ -10,7 +10,7 @@
 
                 <!-- JUDUL -->
                 <h1 class="text-white text-2xl md:text-4xl font-bold mb-4 max-w-4xl leading-tight">
-                    Hubungkan Barang Layak Pakai ke Penerima yang Membutuhkan
+                    Halo Ini Website Green Drop, Platform Donasi Barang untuk Membangun Komunitas Peduli dan Berbagi 
                 </h1>
 
                 <!-- PARAGRAF DI TENGAH NICH -->
