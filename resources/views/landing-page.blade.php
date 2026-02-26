@@ -10,7 +10,7 @@
 
                 <!-- JUDUL -->
                 <h1 class="text-white text-2xl md:text-4xl font-bold mb-4 max-w-4xl leading-tight">
-                    Halo Ini Website Green Drop 
+                    Halo Ini Website Green Drop, Platform Donasi Barang untuk Meringankan Beban Sesama
                 </h1>
 
                 <!-- PARAGRAF DI TENGAH NICH -->
