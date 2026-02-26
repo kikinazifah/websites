@@ -23,6 +23,7 @@ jobs:
           script: |
             cd /var/www/project_jipeh
             git pull origin main
-            composer install --no-dev
+            composer install --no-dev --optimize-autoloader
             php artisan migrate --force
+            php artisan optimize:clear
             php artisan optimize
