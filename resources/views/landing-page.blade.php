@@ -117,7 +117,7 @@
         <main class="relative z-10 mt-5">
             <div class="max-w-5xl mx-auto px-6 py-10">
                 <h2 class="text-center font-extrabold text-3xl md:text-4xl text-green drop-shadow-sm mb-5">
-                    Cara Kerja Green Drop
+                    Cara Mudah Menyalurkan Donasi Anda
                 </h2>
                 <p class="text-text text-center text-xl mb-15">Tiga langkah mudah untuk menyalurkan donasi Anda</p>
 
